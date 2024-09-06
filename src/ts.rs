@@ -26,4 +26,9 @@ impl TS {
         res.ensure();
         res
     }
+    pub fn new_with_named(name: String) -> Self {
+        let mut res = TS::init();
+        res.ensure_stack(name);
+        res
+    }
 }

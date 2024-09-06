@@ -73,13 +73,13 @@ mod tests {
     }
     #[test]
     fn test_ts_rotate_left() {
-        let mut ts = TS::new();
+        let mut ts = TS::new_with_named("Z".to_string());
         ts.add_named_stack("A".to_string())
           .add_named_stack("B".to_string())
           .add_named_stack("C".to_string())
           .left();
         let s_name = ts.current_stack_name().expect("No value been pulled");
-        assert_ne!(s_name, "B");
+        assert_eq!(s_name, "Z");
     }
     #[test]
     fn test_ts_rotate_right() {

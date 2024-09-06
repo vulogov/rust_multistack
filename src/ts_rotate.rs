@@ -1,5 +1,13 @@
 use crate::ts::TS;
 
+pub fn ts_rotate_stacks_left(ts: &mut TS) -> &mut TS {
+    ts.left()
+}
+
+pub fn ts_rotate_stacks_right(ts: &mut TS) -> &mut TS {
+    ts.right()
+}
+
 impl TS {
     pub fn left(&mut self) -> &mut TS {
         self.ensure();
