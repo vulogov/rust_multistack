@@ -16,4 +16,17 @@ impl TS {
             }
         }
     }
+    pub fn stack(&mut self, name: String) -> Option<&mut Stack<Value>> {
+        if self.stack.contains_key(&name) {
+            match self.stack.get_mut(&name) {
+                Some(curr) => {
+                    return Some(curr);
+                }
+                None => {
+                    return None;
+                }
+            }
+        }
+        None
+    }
 }

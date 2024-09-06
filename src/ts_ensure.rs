@@ -7,4 +7,13 @@ impl TS {
         }
         self
     }
+    pub fn ensure_stack(&mut self, name: String) -> &mut TS {
+        if ! self.stack.contains_key(&name) {
+            self.add_named_stack(name);
+        }
+        self
+    }
+    pub fn stack_exists(&mut self, name: String) -> bool {
+        self.stack.contains_key(&name)
+    }
 }
