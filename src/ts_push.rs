@@ -10,9 +10,10 @@ pub fn ts_push_to_stack(ts: &mut TS, name: String, value: Value) {
 }
 
 impl TS {
-    pub fn push(&mut self, value: Value) -> &mut TS {
+    pub fn push(&mut self, mut value: Value) -> &mut TS {
         match self.current() {
             Some(curr) => {
+                value.set_tag("stack", &curr.stack_id());
                 curr.push(value);
                 return self;
             }
@@ -22,10 +23,11 @@ impl TS {
             }
         }
     }
-    pub fn push_to_stack(&mut self, name: String, value: Value) -> &mut TS {
+    pub fn push_to_stack(&mut self, name: String, mut value: Value) -> &mut TS {
         self.ensure_stack(name.clone());
         match self.stack(name.clone()) {
             Some(curr) => {
+                value.set_tag("stack", &curr.stack_id());
                 curr.push(value.clone());
                 return self;
             }
