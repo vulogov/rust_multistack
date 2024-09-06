@@ -1,0 +1,11 @@
+[package]
+name = "rust_multistack"
+version = "0.1.0"
+edition = "2021"
+description = "Support for two-dimentional stacks for the Rust programming language"
+license-file = "LICENSE"
+repository = "https://github.com/vulogov/rust_multistack"
+
+[dependencies]
+nanoid = "0.4.*"
+rust_dynamic = ">= 0.15.*"
