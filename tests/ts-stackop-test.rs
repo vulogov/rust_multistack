@@ -47,4 +47,28 @@ mod tests {
         assert_eq!(ts.stack_len("A".to_string()), 3);
     }
 
+    #[test]
+    fn test_ts_swap_in_current_stack() {
+        let mut ts = TS::new();
+        ts.push(Value::from(41.0).unwrap())
+          .push(Value::from(42.0).unwrap())
+          .push(Value::from(43.0).unwrap());
+        ts.swap_in_current_stack(1);
+        let val = ts.pull().expect("No pull() happens");
+        assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
+    }
+
+    #[test]
+    fn test_ts_swap_in_stack() {
+        let mut ts = TS::new();
+        ts.ensure_stack("A".to_string());
+        ts.ensure_stack("B".to_string());
+        ts.push_to_stack("A".to_string(), Value::from(41.0).unwrap())
+          .push_to_stack("A".to_string(), Value::from(42.0).unwrap())
+          .push_to_stack("A".to_string(), Value::from(43.0).unwrap());
+        ts.swap_in_stack(1, "A".to_string());
+        let val = ts.pull_from_stack("A".to_string()).expect("No pull() happens");
+        assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
+    }
+
 }
