@@ -2,9 +2,7 @@
 mod tests {
     #![allow(unused_imports)]
     use super::*;
+    use rust_dynamic::value::Value;
+    use rust_multistack::stack::Stack;
 
-    #[test]
-    fn test_dummy() {
-        assert_eq!(42, 42);
-    }
 }
