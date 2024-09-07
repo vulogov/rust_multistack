@@ -1,3 +1,7 @@
+# History
+
+rust_multistack crate is a deeply reviewed and re-designed version of another Rust crate called rust_twostack. All further development will continue with rust_multistack.
+
 # What's on the Stack ?
 
 What is a two-dimensional stack? The rust_multistack crate offers the functionality of a two-dimensional stack structure for the Rust programming language. This data structure can contain dynamically typed values provided by the rust_dynamic crate. While the concepts of Last-In-First-Out (LIFO) and First-In-First-Out (FIFO) stacks are likely familiar to you, serving as data structures designed to store and extract values based on specific application logic, it is important to consider the potential limitations of this well-established concept.
@@ -74,3 +78,31 @@ You can access a data stack by calling TS.current(). After that, you can control
 | Stack.pull() | Remove and return the current element from the stack |
 | Stack.left() | Rotate data stack one position to the left |
 | Stack.right() | Rotate data stack one position to the right |
+
+## What is the best way to exchange data between stacks ?
+
+rust_multistack provides mechanism called "Workbench". Workbench is a single stack of Values and yo can push and pull data between stacks and workbench.
+
+| Function name | Description |
+|---|---|
+| TS.pull_from_workbench() | Return the Value element on top of the Workbench |
+| TS.push_to_workbench(value) | Push arbitrary value to a Workbench |
+| TS.return_from_current_to_workbench() | Pull the data from current stack and push it to a workbench |
+| TS.return_from_stack_to_workbench() | Pull the data from named stack and push it to a workbench |
+| TS.return_from_workbench_to_current() | Pull the data from workbench and push it to a current stack |
+| TS.return_from_workbench_to_stack() | Pull the data from workbench and push it to a named stack |
+
+```rust
+let mut ts = TS::new();
+    ts.ensure_stack("A".to_string());
+    ts.ensure_stack("B".to_string());
+    ts.push_to_stack("A".to_string(), Value::from(41.0).unwrap())
+      .push_to_stack("A".to_string(), Value::from(42.0).unwrap())
+      .push_to_stack("A".to_string(), Value::from(43.0).unwrap());
+    ts.return_from_stack_to_workbench("A".to_string());
+    ts.return_from_workbench_to_stack("B".to_string());
+    let val = ts.pull_from_stack("B".to_string()).expect("No pull() happens");
+    assert_eq!(val.cast_float().unwrap(), 43.0 as f64);
+```
+
+In this example we are creating two named stacks and push three elements to stack "A". Then we are taking last element from stack "A" and push it to Workbench. After that, we are pulling data from Workbench and pushing to stack "B". Normally, you will add an additional computation and processing to this code.
