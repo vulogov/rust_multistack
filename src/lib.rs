@@ -1,3 +1,4 @@
+pub mod stdlib;
 pub mod stack;
 pub mod stack_len;
 pub mod stack_push;
@@ -12,6 +13,7 @@ pub mod ts_len;
 pub mod ts_ensure;
 pub mod ts_clear;
 pub mod ts_current;
+pub mod ts_functions;
 pub mod ts_rotate;
 pub mod ts_rotate_stack;
 pub mod ts_push;

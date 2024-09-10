@@ -1,8 +1,11 @@
 use crate::stack::Stack;
+use crate::stdlib::init_stdlib;
 use std::collections;
 use rust_dynamic::value::Value;
+use easy_error::{Error};
 use nanoid::nanoid;
 
+pub type AppFn      = fn(&mut TS, Option<Value>, Option<Value>) -> Result<&mut TS, Error>;
 
 #[derive(Clone)]
 pub struct TS{
@@ -10,6 +13,7 @@ pub struct TS{
     pub stack:          collections::HashMap<String, Stack<Value>>,
     pub stacks:         collections::VecDeque<String>,
     pub workbench:      Stack<Value>,
+    pub functions:      collections::HashMap<String, AppFn>,
 }
 
 impl TS {
@@ -19,15 +23,18 @@ impl TS {
             stack:      collections::HashMap::new(),
             stacks:     collections::VecDeque::new(),
             workbench:  Stack::new(),
+            functions:  collections::HashMap::new(),
         }
     }
     pub fn new() -> Self {
         let mut res = TS::init();
+        init_stdlib(&mut res);
         res.ensure();
         res
     }
     pub fn new_with_named(name: String) -> Self {
         let mut res = TS::init();
+        init_stdlib(&mut res);
         res.ensure_stack(name);
         res
     }

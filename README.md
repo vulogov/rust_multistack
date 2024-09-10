@@ -106,3 +106,39 @@ let mut ts = TS::new();
 ```
 
 In this example we are creating two named stacks and push three elements to stack "A". Then we are taking last element from stack "A" and push it to Workbench. After that, we are pulling data from Workbench and pushing to stack "B". Normally, you will add an additional computation and processing to this code.
+
+## Support for a "stack functions"
+
+You can register a stack functions, that can be used as a generic interface for operations with multi-stack. First, let's define a simple function that will, for example, push value to stack. This function takes a reference to a multi-stack as first parameters and two ```Some()|None``` values. Stack functions can only accept none, one or two parameters.
+
+```rust
+pub fn stdlib_push_value_to_current(ts: &mut TS, value1: Option<Value>, _value2: Option<Value>) -> Result<&mut TS, Error> {
+    match value1 {
+        Some(val) => {
+            ts.push(val);
+        }
+        None => {
+            bail!("Value is missed for a push() operation");
+        }
+    }
+    Ok(ts)
+}
+```
+
+Next, you have to register your function under some name, for example - "push":
+
+```rust
+let _ = ts.register_function("push".to_string(), stdlib_push_value_to_current);
+```
+
+Then using function TS::f() you can call stack function. This function expects only one parameter - the value that will be pushed to the current stack.
+
+```rust
+let mut ts = TS::new();
+    ts.f("push".to_string(),
+        Some(Value::from(42.0).unwrap()),
+        None
+    ).unwrap();
+    let val = ts.pull().expect("No pull() happens");
+    assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
+```
