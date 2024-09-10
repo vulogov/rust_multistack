@@ -53,4 +53,37 @@ mod tests {
         assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
     }
 
+    #[test]
+    fn test_function_workbech1() {
+        let mut ts = TS::new();
+        ts.f("push".to_string(),
+            Some(Value::from(42.0).unwrap()),
+            None
+        ).unwrap();
+        ts.f("return".to_string(),
+            None,
+            None
+        ).unwrap();
+        let val = ts.pull_from_workbench().expect("No pull() happens");
+        assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
+    }
+
+    #[test]
+    fn test_function_workbech2() {
+        let mut ts = TS::new();
+        ts.f("push".to_string(),
+            Some(Value::from(42.0).unwrap()),
+            None
+        ).unwrap();
+        ts.f("return".to_string(),
+            None,
+            None
+        ).unwrap();
+        ts.f("from_workbench".to_string(),
+            None,
+            None
+        ).unwrap();
+        let val = ts.pull().expect("No pull() happens");
+        assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
+    }
 }
