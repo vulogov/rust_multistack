@@ -54,7 +54,7 @@ mod tests {
     }
 
     #[test]
-    fn test_function_workbech1() {
+    fn test_function_workbench1() {
         let mut ts = TS::new();
         ts.f("push".to_string(),
             Some(Value::from(42.0).unwrap()),
@@ -69,7 +69,7 @@ mod tests {
     }
 
     #[test]
-    fn test_function_workbech2() {
+    fn test_function_workbench2() {
         let mut ts = TS::new();
         ts.f("push".to_string(),
             Some(Value::from(42.0).unwrap()),
@@ -81,6 +81,42 @@ mod tests {
         ).unwrap();
         ts.f("from_workbench".to_string(),
             None,
+            None
+        ).unwrap();
+        let val = ts.pull().expect("No pull() happens");
+        assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
+    }
+
+    #[test]
+    fn test_function_workbench3() {
+        let mut ts = TS::new();
+        ts.ensure_stack("A".to_string());
+        ts.f("push_to".to_string(),
+            Some(Value::from("A").unwrap()),
+            Some(Value::from(42.0).unwrap())
+        ).unwrap();
+        ts.f("return_from".to_string(),
+            Some(Value::from("A").unwrap()),
+            None
+        ).unwrap();
+        let val = ts.pull_from_workbench().expect("No pull() happens");
+        assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
+    }
+
+    #[test]
+    fn test_function_workbench4() {
+        let mut ts = TS::new();
+        ts.ensure_stack("A".to_string());
+        ts.f("push_to".to_string(),
+            Some(Value::from("A").unwrap()),
+            Some(Value::from(42.0).unwrap())
+        ).unwrap();
+        ts.f("return_from".to_string(),
+            Some(Value::from("A").unwrap()),
+            None
+        ).unwrap();
+        ts.f("return_to".to_string(),
+            Some(Value::from("A").unwrap()),
             None
         ).unwrap();
         let val = ts.pull().expect("No pull() happens");

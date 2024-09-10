@@ -141,4 +141,16 @@ let mut ts = TS::new();
     ).unwrap();
     let val = ts.pull().expect("No pull() happens");
     assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
+
 ```
+
+### Show me the list of the stack functions
+
+| Function name | Description | 1 | 2 |
+|---|---|---|---|
+| push | Pushing value to current stack | Value | None |
+| push_to | Pushing value to named stack | Name | Value |
+| return | Push value from the current stack to Workbench | None | None |
+| from_workbench | Push value from the Workbench to current stack | None | None |
+| return_to | Push value from the Workbench to named stack | Name | None |
+| return_from | Push value from the named stack to Workbench | Name | None |
