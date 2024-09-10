@@ -122,4 +122,33 @@ mod tests {
         let val = ts.pull().expect("No pull() happens");
         assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
     }
+
+    #[test]
+    fn test_function_dup1() {
+        let mut ts = TS::new();
+        ts.f("push".to_string(),
+            Some(Value::from(42.0).unwrap()),
+            None
+        ).unwrap();
+        ts.f("dup".to_string(),
+            Some(Value::from(2).unwrap()),
+            None
+        ).unwrap();
+        assert_eq!(ts.current_stack_len(), 3);
+    }
+
+    #[test]
+    fn test_function_dup2() {
+        let mut ts = TS::new();
+        ts.ensure_stack("A".to_string());
+        ts.f("push_to".to_string(),
+            Some(Value::from("A").unwrap()),
+            Some(Value::from(42.0).unwrap())
+        ).unwrap();
+        ts.f("dup_in".to_string(),
+            Some(Value::from("A").unwrap()),
+            Some(Value::from(2).unwrap())
+        ).unwrap();
+        assert_eq!(ts.current_stack_len(), 3);
+    }
 }

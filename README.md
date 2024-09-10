@@ -154,3 +154,5 @@ let mut ts = TS::new();
 | from_workbench | Push value from the Workbench to current stack | None | None |
 | return_to | Push value from the Workbench to named stack | Name | None |
 | return_from | Push value from the named stack to Workbench | Name | None |
+| dup | Duplicate value in current stack | Number of duplicates | None |
+| dup_in | Duplicate value in named stack | Name | Number of duplicates |
