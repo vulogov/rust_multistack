@@ -134,7 +134,7 @@ let _ = ts.register_function("push".to_string(), stdlib_push_value_to_current);
 Then using function TS::f() you can call stack function. This function expects only one parameter - the value that will be pushed to the current stack.
 
 ```rust
-let mut ts = TS::new();
+    let mut ts = TS::new();
     ts.f("push".to_string(),
         Some(Value::from(42.0).unwrap()),
         None
@@ -156,3 +156,49 @@ let mut ts = TS::new();
 | return_from | Push value from the named stack to Workbench | Name | None |
 | dup | Duplicate value in current stack | Number of duplicates | None |
 | dup_in | Duplicate value in named stack | Name | Number of duplicates |
+
+## Support for "inline functions"
+
+Inline function is a function implemented in Rust, that is obtaining it's parameters directly from Stack. Let me illustrate this idea in pseudo-assembler
+
+```
+ensure_stack "A"    // First, we creating named stack
+push_to "A" 42.0    // Then pushing a number to stack "A"
+push "A"            // Now, we are pushing name of the stack from which we will read value to a current stack
+call "return_from"  // This inline function will read the name of the stack from which it will read value from current stack to Workbench
+push "A"            // Push the name of the stack again
+call "return_to"    // Pushing value from Workbench to named stack
+// Now we shall expect number 42.0 on the top of the named stack "A"
+```
+
+Which Rust code correspond to this pseudocode?
+
+```rust
+    let mut ts = TS::new();
+    ts.ensure_stack("A".to_string());
+    ts.f("push_to".to_string(),
+        Some(Value::from("A").unwrap()),
+        Some(Value::from(42.0).unwrap())
+    ).unwrap();
+    ts.f("push".to_string(),
+        Some(Value::from("A").unwrap()),
+        None
+    ).unwrap();
+    ts.i("return_from".to_string()).unwrap();
+
+    ts.f("push".to_string(),
+        Some(Value::from("A").unwrap()),
+        None
+    ).unwrap();
+    ts.i("return_to".to_string()).unwrap();
+    let val = ts.pull_from_stack("A".to_string()).expect("No pull() happens");
+    assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
+```
+
+### Show me the list of inline functions
+
+| Function name | Description | Stack |
+|---|---|---|
+| return | Push value from the current stack to Workbench |  |
+| return_from | Push value from the named stack to Workbench | Name |
+| return_to | Push value from Workbench to the named stack | Name |
