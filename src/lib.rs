@@ -11,6 +11,7 @@ pub mod ts;
 pub mod ts_add;
 pub mod ts_len;
 pub mod ts_ensure;
+pub mod ts_to_current;
 pub mod ts_clear;
 pub mod ts_current;
 pub mod ts_functions;
