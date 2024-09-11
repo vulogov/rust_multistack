@@ -81,7 +81,7 @@ You can access a data stack by calling TS.current(). After that, you can control
 
 ## What is the best way to exchange data between stacks ?
 
-rust_multistack provides mechanism called "Workbench". Workbench is a single stack of Values and yo can push and pull data between stacks and workbench.
+rust_multistack provides a mechanism called "Workbench." The Workbench is a single stack of values, and you can push and pull data between stacks and the Workbench.
 
 | Function name | Description |
 |---|---|
@@ -93,7 +93,7 @@ rust_multistack provides mechanism called "Workbench". Workbench is a single sta
 | TS.return_from_workbench_to_stack() | Pull the data from workbench and push it to a named stack |
 
 ```rust
-let mut ts = TS::new();
+    let mut ts = TS::new();
     ts.ensure_stack("A".to_string());
     ts.ensure_stack("B".to_string());
     ts.push_to_stack("A".to_string(), Value::from(41.0).unwrap())
@@ -105,11 +105,33 @@ let mut ts = TS::new();
     assert_eq!(val.cast_float().unwrap(), 43.0 as f64);
 ```
 
-In this example we are creating two named stacks and push three elements to stack "A". Then we are taking last element from stack "A" and push it to Workbench. After that, we are pulling data from Workbench and pushing to stack "B". Normally, you will add an additional computation and processing to this code.
+In this example, we create two named stacks and push three elements to stack "A." Then, we take the last element from stack "A" and push it to the Workbench. After that, we pull data from the Workbench and push it to stack "B." Typically, additional computation and processing would be added to this code.
+
+Another approach for transferring data between different stacks is to transfer data from the current stack to a named stack or between two named stacks:
+
+| Function name | Description |
+|---|---|
+| Stack.move_from_current(dst) | Move all elements from current stack to named stack |
+| Stack.move_from_stack(src, dst) | Move all elements from named stack to another named stack |
+
+Here is an example of cross-stack move operation:
+
+```rust
+    let mut ts = TS::new();
+    ts.ensure_stack("A".to_string());
+    ts.push(Value::from(42.0).unwrap());
+    ts.ensure_stack("B".to_string());
+    ts.move_from_stack("A".to_string(), "B".to_string());
+    let val = ts.pull().expect("No pull() happens");
+    assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
+```
+
+In this example we creating two naed stacks "A" and "B", pushing data to stack "A" and them move it to stack "B".
+
 
 ## Support for a "stack functions"
 
-You can register a stack functions, that can be used as a generic interface for operations with multi-stack. First, let's define a simple function that will, for example, push value to stack. This function takes a reference to a multi-stack as first parameters and two ```Some()|None``` values. Stack functions can only accept none, one or two parameters.
+You can register a stack function to create a generic interface for performing operations with a multi-stack. First, let's define a simple function, for example, one that pushes a value to the stack. This function refers to a multi-stack as the first parameter, followed by two ``` Some()|None``` values. Stack functions can only accept none, one, or two parameters.
 
 ```rust
 pub fn stdlib_push_value_to_current(ts: &mut TS, value1: Option<Value>, _value2: Option<Value>) -> Result<&mut TS, Error> {
@@ -156,10 +178,13 @@ Then using function TS::f() you can call stack function. This function expects o
 | return_from | Push value from the named stack to Workbench | Name | None |
 | dup | Duplicate value in current stack | Number of duplicates | None |
 | dup_in | Duplicate value in named stack | Name | Number of duplicates |
+| move | Move all values from current to named stack | Dst | None |
+| move_from | Move all values from named to another named stack | Src | Dst |
+
 
 ## Support for "inline functions"
 
-Inline function is a function implemented in Rust, that is obtaining it's parameters directly from Stack. Let me illustrate this idea in pseudo-assembler
+An inline function in a multi-stack retrieves its parameters directly from the stack. Allow me to elucidate this concept using a pseudo-assembler.
 
 ```
 ensure_stack "A"    // First, we creating named stack
