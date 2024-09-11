@@ -6,6 +6,7 @@ use easy_error::{Error};
 use nanoid::nanoid;
 
 pub type AppFn      = fn(&mut TS, Option<Value>, Option<Value>) -> Result<&mut TS, Error>;
+pub type InlineFn   = fn(&mut TS) -> Result<&mut TS, Error>;
 
 #[derive(Clone)]
 pub struct TS{
@@ -14,6 +15,7 @@ pub struct TS{
     pub stacks:         collections::VecDeque<String>,
     pub workbench:      Stack<Value>,
     pub functions:      collections::HashMap<String, AppFn>,
+    pub inline_fun:     collections::HashMap<String, InlineFn>,
 }
 
 impl TS {
@@ -24,6 +26,7 @@ impl TS {
             stacks:     collections::VecDeque::new(),
             workbench:  Stack::new(),
             functions:  collections::HashMap::new(),
+            inline_fun: collections::HashMap::new(),
         }
     }
     pub fn new() -> Self {
