@@ -227,3 +227,5 @@ Which Rust code correspond to this pseudocode?
 | return | Push value from the current stack to Workbench |  |
 | return_from | Push value from the named stack to Workbench | Name |
 | return_to | Push value from Workbench to the named stack | Name |
+| move | Move all values from current to named stack | Dst  |
+| move_from | Move all values from named to another named stack | Dst Src |
