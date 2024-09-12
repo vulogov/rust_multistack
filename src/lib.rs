@@ -1,5 +1,3 @@
-#![doc = include_str!("../README.md")]
-
 pub mod stdlib;
 pub mod stack;
 pub mod stack_len;
