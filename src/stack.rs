@@ -1,6 +1,9 @@
 use std::collections;
 use nanoid::nanoid;
 
+///
+/// Abstraction of the stack structure, implemented on top of std::collections::VecDeque
+///
 #[derive(Clone, Debug)]
 pub struct Stack<T> {
     id:             String,

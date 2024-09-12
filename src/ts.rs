@@ -8,6 +8,12 @@ use nanoid::nanoid;
 pub type AppFn      = fn(&mut TS, Option<Value>, Option<Value>) -> Result<&mut TS, Error>;
 pub type InlineFn   = fn(&mut TS) -> Result<&mut TS, Error>;
 
+///
+/// Principial structure provining interface to all funcitonality of multi-stack. To create TS structure you shall call TS::new() or TS::new_with_named(name)
+/// ```rust
+/// let mut ts = TS::new()
+/// ```
+///
 #[derive(Clone)]
 pub struct TS{
     pub id:             String,
@@ -29,12 +35,18 @@ impl TS {
             inline_fun: collections::HashMap::new(),
         }
     }
+    ///
+    /// Create and initialize TS structure with single anonymous stack
+    ///
     pub fn new() -> Self {
         let mut res = TS::init();
         init_stdlib(&mut res);
         res.ensure();
         res
     }
+    ///
+    /// Create and initialize TS structure with single named stack 
+    ///
     pub fn new_with_named(name: String) -> Self {
         let mut res = TS::init();
         init_stdlib(&mut res);

@@ -5,6 +5,7 @@ pub mod workbench;
 pub mod dup;
 pub mod stack_move;
 pub mod current;
+pub mod swap;
 
 pub fn init_stdlib(ts: &mut TS) {
     push::init_stdlib(ts);
@@ -12,4 +13,5 @@ pub fn init_stdlib(ts: &mut TS) {
     dup::init_stdlib(ts);
     stack_move::init_stdlib(ts);
     current::init_stdlib(ts);
+    swap::init_stdlib(ts);
 }
