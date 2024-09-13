@@ -62,6 +62,8 @@ Here is the list of TS object methods that control the Stack-of-the-stacks.
 | TS.dup() | Duplicate data value located on top of the stack |
 | TS.drop() | Drop the value in current stack |
 | TS.drop_in() | Drop the value in named stack |
+| TS.drop_stack() | Drop the current stack from the stacks structure |
+
 
 
 ## How you can control data stack ?

@@ -51,9 +51,26 @@ pub fn stdlib_drop_in_stack_inline(ts: &mut TS) -> Result<&mut TS, Error> {
     stdlib_drop_in_stack(ts, name, None)
 }
 
+pub fn stdlib_drop_stack(ts: &mut TS, _value1: Option<Value>, _value2: Option<Value>) -> Result<&mut TS, Error> {
+    match ts.drop_stack() {
+        Ok(ts) => {
+            return Ok(ts);
+        }
+        Err(err) => {
+            bail!("Function drop_stack() returned: {}", err);
+        }
+    }
+}
+
+pub fn stdlib_drop_stack_inline(ts: &mut TS) -> Result<&mut TS, Error> {
+    stdlib_drop_stack(ts, None, None)
+}
+
 pub fn init_stdlib(ts: &mut TS) {
     let _ = ts.register_function("drop".to_string(), stdlib_drop_in_current);
     let _ = ts.register_inline("drop".to_string(), stdlib_drop_in_current_inline);
     let _ = ts.register_function("drop_in".to_string(), stdlib_drop_in_stack);
     let _ = ts.register_inline("drop_in".to_string(), stdlib_drop_in_stack_inline);
+    let _ = ts.register_function("drop_stack".to_string(), stdlib_drop_stack);
+    let _ = ts.register_inline("drop_stack".to_string(), stdlib_drop_stack_inline);
 }

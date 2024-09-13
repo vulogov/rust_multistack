@@ -28,4 +28,22 @@ mod tests {
         assert_eq!(ts.stack_len("A".to_string()), 1);
     }
 
+    #[test]
+    fn test_ts_drop_stack() {
+        let mut ts = TS::new();
+        ts.ensure_stack("A".to_string());
+        ts.ensure_stack("B".to_string());
+        ts.drop_stack().unwrap();
+        assert_eq!(ts.current_stack_name().unwrap(), "A".to_string());
+    }
+
+    #[test]
+    fn test_ts_drop_stack_inline() {
+        let mut ts = TS::new();
+        ts.ensure_stack("A".to_string());
+        ts.ensure_stack("B".to_string());
+        ts.i("drop_stack".to_string()).unwrap();
+        assert_eq!(ts.current_stack_name().unwrap(), "A".to_string());
+    }
+
 }

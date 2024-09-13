@@ -20,6 +20,18 @@ pub fn stdlib_dup_in_current(ts: &mut TS, value1: Option<Value>, _value2: Option
     }
 }
 
+pub fn stdlib_dup_many_in_current_inline(ts: &mut TS) -> Result<&mut TS, Error> {
+    if ts.current_stack_len() < 1 {
+        bail!("Stack is too shallow for inline dup_many()");
+    }
+    let n = ts.pull();
+    stdlib_dup_in_current(ts, n, None)
+}
+
+pub fn stdlib_dup_one_in_current_inline(ts: &mut TS) -> Result<&mut TS, Error> {
+    stdlib_dup_in_current(ts, Some(Value::from(1).unwrap()), None)
+}
+
 pub fn stdlib_dup_in_stack(ts: &mut TS, value1: Option<Value>, value2: Option<Value>) -> Result<&mut TS, Error> {
     match value1 {
         Some(name_val) => {
@@ -52,7 +64,28 @@ pub fn stdlib_dup_in_stack(ts: &mut TS, value1: Option<Value>, value2: Option<Va
     }
 }
 
+pub fn stdlib_dup_many_in_stack_inline(ts: &mut TS) -> Result<&mut TS, Error> {
+    if ts.current_stack_len() < 2 {
+        bail!("Stack is too shallow for inline dup_many()");
+    }
+    let name = ts.pull();
+    let n = ts.pull();
+    stdlib_dup_in_stack(ts, name, n)
+}
+
+pub fn stdlib_dup_one_in_stack_inline(ts: &mut TS) -> Result<&mut TS, Error> {
+    if ts.current_stack_len() < 1 {
+        bail!("Stack is too shallow for inline dup_many()");
+    }
+    let name = ts.pull();
+    stdlib_dup_in_stack(ts, name, Some(Value::from(1).unwrap()))
+}
+
 pub fn init_stdlib(ts: &mut TS) {
     let _ = ts.register_function("dup".to_string(), stdlib_dup_in_current);
+    let _ = ts.register_inline("dup_many".to_string(), stdlib_dup_many_in_current_inline);
+    let _ = ts.register_inline("dup_one".to_string(), stdlib_dup_one_in_current_inline);
     let _ = ts.register_function("dup_in".to_string(), stdlib_dup_in_stack);
+    let _ = ts.register_inline("dup_many_in".to_string(), stdlib_dup_many_in_stack_inline);
+    let _ = ts.register_inline("dup_one".to_string(), stdlib_dup_one_in_stack_inline);
 }

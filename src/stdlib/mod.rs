@@ -8,6 +8,7 @@ pub mod current;
 pub mod swap;
 pub mod clear;
 pub mod drop;
+pub mod ensure_stack;
 
 pub fn init_stdlib(ts: &mut TS) {
     push::init_stdlib(ts);
@@ -18,4 +19,5 @@ pub fn init_stdlib(ts: &mut TS) {
     swap::init_stdlib(ts);
     clear::init_stdlib(ts);
     drop::init_stdlib(ts);
+    ensure_stack::init_stdlib(ts);
 }
