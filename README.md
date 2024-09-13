@@ -188,6 +188,8 @@ Then using function TS::f() you can call stack function. This function expects o
 | clear_in | Clear all values in named stack | Name | None |
 | drop | Drop value in current stack | None | None |
 | drop_in | Drop value in named stack | Name | None |
+| fold | Fold all elements of the stack into LIST Value and push the LIST into current stack | None | None |
+| fold_stack | Fold all elements of the named stack into LIST Value and push the LIST into named stack | Name | None |
 
 ## Support for "inline functions"
 
@@ -240,3 +242,5 @@ Which Rust code correspond to this pseudocode?
 | clear_in | Clear all values in named stack | Name |
 | drop | Drop value in current stack | |
 | drop_in | Drop value in named stack | Name |
+| fold | Fold all elements of the stack into LIST Value and push the LIST into current stack |  |
+| fold_stack | Fold all elements of the named stack into LIST Value and push the LIST into named stack | Name  |
