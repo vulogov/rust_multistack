@@ -63,7 +63,8 @@ Here is the list of TS object methods that control the Stack-of-the-stacks.
 | TS.drop() | Drop the value in current stack |
 | TS.drop_in() | Drop the value in named stack |
 | TS.drop_stack() | Drop the current stack from the stacks structure |
-
+| TS.fold_current() | Fold all elements of the stack into LIST Value and push the LIST into current stack |
+| TS.fold_name() | Fold all elements of the named stack into LIST Value and push the LIST into named stack |
 
 
 ## How you can control data stack ?
