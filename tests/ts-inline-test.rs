@@ -52,7 +52,7 @@ mod tests {
             None
         ).unwrap();
         ts.i("return_from".to_string()).unwrap();
-        
+
         ts.f("push".to_string(),
             Some(Value::from("A").unwrap()),
             None
@@ -60,5 +60,18 @@ mod tests {
         ts.i("return_to".to_string()).unwrap();
         let val = ts.pull_from_stack("A".to_string()).expect("No pull() happens");
         assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
+    }
+
+    #[test]
+    fn test_stack_exists() {
+        let mut ts = TS::new();
+        ts.ensure_stack("A".to_string());
+        ts.f("push".to_string(),
+            Some(Value::from("A").unwrap()),
+            None
+        ).unwrap();
+        ts.i("stack_exists".to_string()).unwrap();
+        let val = ts.pull_from_stack("A".to_string()).expect("No pull() happens");
+        assert_eq!(val.cast_bool().unwrap(), true);
     }
 }
