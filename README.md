@@ -180,7 +180,8 @@ Then using function TS::f() you can call stack function. This function expects o
 | dup_in | Duplicate value in named stack | Name | Number of duplicates |
 | move | Move all values from current to named stack | Dst | None |
 | move_from | Move all values from named to another named stack | Src | Dst |
-
+| clear | Clear all values in current stack | None | None |
+| clear_in | Clear all values in named stack | Name | None |
 
 ## Support for "inline functions"
 
@@ -229,3 +230,5 @@ Which Rust code correspond to this pseudocode?
 | return_to | Push value from Workbench to the named stack | Name |
 | move | Move all values from current to named stack | Dst  |
 | move_from | Move all values from named to another named stack | Dst Src |
+| clear | Clear all values in current stack | |
+| clear_in | Clear all values in named stack | Name |
