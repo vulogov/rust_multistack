@@ -1,6 +1,6 @@
 [package]
 name = "rust_multistack"
-version = "0.22.0"
+version = "0.23.0"
 edition = "2021"
 description = "Support for two-dimentional stacks for the Rust programming language"
 license-file = "LICENSE"
