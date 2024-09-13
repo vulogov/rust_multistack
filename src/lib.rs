@@ -22,5 +22,6 @@ pub mod ts_push;
 pub mod ts_pull;
 pub mod ts_peek;
 pub mod ts_move;
+pub mod ts_drop;
 pub mod ts_stack_op;
 pub mod ts_workbench;

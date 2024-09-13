@@ -60,7 +60,8 @@ Here is the list of TS object methods that control the Stack-of-the-stacks.
 | TS.add_named_stack() | Add new named data stack and make it current |
 | TS.swap() | For the current stack that have to be at least 2 values deep, this method will swap last two elements of the stack |
 | TS.dup() | Duplicate data value located on top of the stack |
-| TS.drop() | Drop the top stack |
+| TS.drop() | Drop the value in current stack |
+| TS.drop_in() | Drop the value in named stack |
 
 
 ## How you can control data stack ?
@@ -182,6 +183,8 @@ Then using function TS::f() you can call stack function. This function expects o
 | move_from | Move all values from named to another named stack | Src | Dst |
 | clear | Clear all values in current stack | None | None |
 | clear_in | Clear all values in named stack | Name | None |
+| drop | Drop value in current stack | None | None |
+| drop_in | Drop value in named stack | Name | None |
 
 ## Support for "inline functions"
 
@@ -232,3 +235,5 @@ Which Rust code correspond to this pseudocode?
 | move_from | Move all values from named to another named stack | Dst Src |
 | clear | Clear all values in current stack | |
 | clear_in | Clear all values in named stack | Name |
+| drop | Drop value in current stack | |
+| drop_in | Drop value in named stack | Name |
