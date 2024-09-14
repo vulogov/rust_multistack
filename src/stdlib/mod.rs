@@ -10,6 +10,7 @@ pub mod clear;
 pub mod drop;
 pub mod fold;
 pub mod ensure_stack;
+pub mod rotate;
 
 pub fn init_stdlib(ts: &mut TS) {
     push::init_stdlib(ts);
@@ -22,4 +23,5 @@ pub fn init_stdlib(ts: &mut TS) {
     drop::init_stdlib(ts);
     ensure_stack::init_stdlib(ts);
     fold::init_stdlib(ts);
+    rotate::init_stdlib(ts);
 }

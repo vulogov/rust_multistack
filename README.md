@@ -193,6 +193,12 @@ Then using function TS::f() you can call stack function. This function expects o
 | fold_stack | Fold all elements of the named stack into LIST Value and push the LIST into named stack | Name | None |
 | to_current | Make exiting stack current | Name | None |
 | to_stack | Make exiting stack current | Name | None |
+| rotate_stack_left | Rotate named stack left | Name  | None |
+| rotate_stack_right | Rotate named stack right | Name  | None |
+| rotate_current_left | Rotate current stack left | None | None |
+| rotate_current_right | Rotate current stack right | None | None |
+| rotate_stacks_left | Rotate circular list of stacks left | None | None |
+| rotate_stacks_right | Rotate circular list of stacks right | None | None |
 
 ## Support for "inline functions"
 
@@ -249,3 +255,9 @@ Which Rust code correspond to this pseudocode?
 | fold_stack | Fold all elements of the named stack into LIST Value and push the LIST into named stack | Name  |
 | to_current | Make exiting stack current | Name  |
 | to_stack | Make exiting stack current | Name  |
+| rotate_stack_left | Rotate named stack left | Name  |
+| rotate_stack_right | Rotate named stack right | Name  |
+| rotate_current_left | Rotate current stack left |  |
+| rotate_current_right | Rotate current stack right |  |
+| rotate_stacks_left | Rotate circular list of stacks left |  |
+| rotate_stacks_right | Rotate circular list of stacks right |  |
