@@ -34,4 +34,11 @@ impl TS {
         }
         return Ok(self);
     }
+    pub fn to_stack(&mut self, name: String) -> Result<&mut TS, Error> {
+        self.ensure();
+        if ! self.stack.contains_key(&name) {
+            return Ok(self.ensure_stack(name.clone()));
+        }
+        self.to_current(name.clone())
+    }
 }

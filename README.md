@@ -48,6 +48,7 @@ Here is the list of TS object methods that control the Stack-of-the-stacks.
 | TS.ensure() | If stack-of-stacks is empty, add a new anonymous stack |
 | TS.ensure_stack(name) | If stack-of-stacks is empty, add a new named stack, if stack-of-stacks is not empty, adds named stack if this stack is not existing |
 | TS.stack_exists() | Returns true if stack with that name exists. Otherwise returns false |
+| TS.to_stack() | Names named stack current. Creates stack if necessary. |
 | TS.len() | Return a number of stacks |
 | TS.is_empty() | Return "true" if Stack-of-stacks is empty, "false" otherwise. Note, if you got "false", likely it is due to internal error and you have a corrupt structure. |
 | TS.current_stack_len() | Return a number of values in current stack |
@@ -190,6 +191,8 @@ Then using function TS::f() you can call stack function. This function expects o
 | drop_in | Drop value in named stack | Name | None |
 | fold | Fold all elements of the stack into LIST Value and push the LIST into current stack | None | None |
 | fold_stack | Fold all elements of the named stack into LIST Value and push the LIST into named stack | Name | None |
+| to_current | Make exiting stack current | Name | None |
+| to_stack | Make exiting stack current | Name | None |
 
 ## Support for "inline functions"
 
@@ -244,3 +247,5 @@ Which Rust code correspond to this pseudocode?
 | drop_in | Drop value in named stack | Name |
 | fold | Fold all elements of the stack into LIST Value and push the LIST into current stack |  |
 | fold_stack | Fold all elements of the named stack into LIST Value and push the LIST into named stack | Name  |
+| to_current | Make exiting stack current | Name  |
+| to_stack | Make exiting stack current | Name  |
