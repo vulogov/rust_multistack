@@ -5,8 +5,10 @@ edition = "2021"
 description = "Support for two-dimentional stacks for the Rust programming language"
 license-file = "LICENSE"
 repository = "https://github.com/vulogov/rust_multistack"
+categories = ["data-structures"]
+keywords = ["stack", "value", "structure", "data-structures", "multistack"]
 
 [dependencies]
 easy-error = "1.0.0"
 nanoid = "0.4.*"
-rust_dynamic = ">= 0.19.*"
+rust_dynamic = ">= 0.20.*"
