@@ -21,6 +21,14 @@ impl TS {
         Ok(self)
     }
 
+    pub fn is_inline(&mut self, name: String) -> bool {
+        if self.inline_fun.contains_key(&name) {
+            true
+        } else {
+            false
+        }
+    }
+
     pub fn get_inline(&mut self, name: String) -> Result<InlineFn, Error> {
         if self.inline_fun.contains_key(&format!("{}_inline", &name)) {
             return match self.inline_fun.get(&format!("{}_inline", &name)) {
