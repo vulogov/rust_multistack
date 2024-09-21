@@ -28,6 +28,7 @@ pub fn stdlib_swap_in_current_inline(ts: &mut TS) -> Result<&mut TS, Error> {
     stdlib_swap_in_current(ts, n, None)
 }
 
+
 pub fn stdlib_swap_in_stack(ts: &mut TS, value1: Option<Value>, value2: Option<Value>) -> Result<&mut TS, Error> {
     match value1 {
         Some(name_val) => {
