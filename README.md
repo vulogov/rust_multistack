@@ -261,3 +261,4 @@ Which Rust code correspond to this pseudocode?
 | rotate_current_right | Rotate current stack right |  |
 | rotate_stacks_left | Rotate circular list of stacks left |  |
 | rotate_stacks_right | Rotate circular list of stacks right |  |
+| current | Return current stack name as string | |

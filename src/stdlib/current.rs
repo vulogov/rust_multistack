@@ -55,9 +55,22 @@ pub fn stdlib_to_stack_inline(ts: &mut TS) -> Result<&mut TS, Error> {
     stdlib_to_stack(ts, name, None)
 }
 
+pub fn stdlib_current_inline(ts: &mut TS) -> Result<&mut TS, Error> {
+    match ts.current_stack_name() {
+        Some(name) => {
+            ts.push(Value::from_string(name.clone()));
+        }
+        None => {
+            bail!("current(): can not detect current stack name");
+        }
+    }
+    Ok(ts)
+}
+
 pub fn init_stdlib(ts: &mut TS) {
     let _ = ts.register_function("to_current".to_string(), stdlib_to_current);
     let _ = ts.register_inline("to_current".to_string(), stdlib_to_current_inline);
     let _ = ts.register_function("to_stack".to_string(), stdlib_to_stack);
     let _ = ts.register_inline("to_stack".to_string(), stdlib_to_stack_inline);
+    let _ = ts.register_inline("current".to_string(), stdlib_current_inline);
 }

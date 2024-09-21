@@ -50,4 +50,14 @@ mod tests {
         assert_eq!(ts.current_stack_name().unwrap(), "C".to_string());
     }
 
+    #[test]
+    fn test_ts_stack_current() {
+        let mut ts = TS::new();
+        ts.ensure_stack("A".to_string());
+        ts.ensure_stack("B".to_string());
+        ts.i("current".to_string()).unwrap();
+        let val = ts.pull().expect("No pull() happens");
+        assert_eq!(val.cast_string().unwrap(), "B".to_string());
+    }
+
 }
