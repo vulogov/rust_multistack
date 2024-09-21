@@ -87,5 +87,5 @@ pub fn init_stdlib(ts: &mut TS) {
     let _ = ts.register_inline("dup_one".to_string(), stdlib_dup_one_in_current_inline);
     let _ = ts.register_function("dup_in".to_string(), stdlib_dup_in_stack);
     let _ = ts.register_inline("dup_many_in".to_string(), stdlib_dup_many_in_stack_inline);
-    let _ = ts.register_inline("dup_one".to_string(), stdlib_dup_one_in_stack_inline);
+    let _ = ts.register_inline("dup_one_in".to_string(), stdlib_dup_one_in_stack_inline);
 }
