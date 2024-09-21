@@ -74,4 +74,5 @@ mod tests {
         let val = ts.pull_from_stack("A".to_string()).expect("No pull() happens");
         assert_eq!(val.cast_bool().unwrap(), true);
     }
+
 }

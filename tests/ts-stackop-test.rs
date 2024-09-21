@@ -71,4 +71,15 @@ mod tests {
         assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
     }
 
+    #[test]
+    fn test_inline_dup() {
+        let mut ts = TS::new();
+        ts.f("push".to_string(),
+            Some(Value::from(42.0).unwrap()),
+            None
+        ).unwrap();
+        ts.i("dup_one".to_string()).unwrap();
+        assert_eq!(ts.current_stack_len(), 2);
+    }
+
 }

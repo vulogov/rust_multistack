@@ -32,7 +32,9 @@ impl TS {
             Some(val) => {
                 for _ in 0..n {
                     let _ = match val.dup() {
-                        Ok(nval) => self.push(nval),
+                        Ok(nval) => {
+                            self.push(nval);
+                        }
                         Err(err) => {
                             bail!("Error duplicating data in current stack: {}", err);
                         }
