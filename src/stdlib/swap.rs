@@ -28,6 +28,28 @@ pub fn stdlib_swap_in_current_inline(ts: &mut TS) -> Result<&mut TS, Error> {
     stdlib_swap_in_current(ts, n, None)
 }
 
+pub fn stdlib_swap_one_in_current_inline(ts: &mut TS) -> Result<&mut TS, Error> {
+    if ts.current_stack_len() < 2 {
+        bail!("Stack is too shallow for inline swap_one()");
+    }
+    match ts.pull() {
+        Some(value1) => {
+            match ts.pull() {
+                Some(value2) => {
+                    ts.push(value1);
+                    ts.push(value2);
+                }
+                None => {
+                    bail!("Value #2 missed for swap_one()");
+                }
+            }
+        }
+        None => {
+            bail!("Value #1 missed for swap_one()");
+        }
+    }
+    Ok(ts)
+}
 
 pub fn stdlib_swap_in_stack(ts: &mut TS, value1: Option<Value>, value2: Option<Value>) -> Result<&mut TS, Error> {
     match value1 {
@@ -75,4 +97,5 @@ pub fn init_stdlib(ts: &mut TS) {
     let _ = ts.register_function("swap_in".to_string(), stdlib_swap_in_stack);
     let _ = ts.register_inline("swap".to_string(), stdlib_swap_in_current_inline);
     let _ = ts.register_inline("swap_in".to_string(), stdlib_swap_in_stack_inline);
+    let _ = ts.register_inline("swap_one".to_string(), stdlib_swap_one_in_current_inline);
 }

@@ -82,4 +82,14 @@ mod tests {
         assert_eq!(ts.current_stack_len(), 2);
     }
 
+    #[test]
+    fn test_ts_swap_one_in_current_stack() {
+        let mut ts = TS::new();
+        ts.push(Value::from(42.0).unwrap())
+          .push(Value::from(41.0).unwrap());
+        ts.i("swap_one".to_string()).unwrap();
+        let val = ts.pull().expect("No pull() happens");
+        assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
+    }
+
 }
