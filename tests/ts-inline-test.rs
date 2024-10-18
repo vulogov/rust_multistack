@@ -75,4 +75,17 @@ mod tests {
         assert_eq!(val.cast_bool().unwrap(), true);
     }
 
+    #[test]
+    fn test_inline_workbench4() {
+        let mut ts = TS::new();
+        ts.f("push".to_string(),
+            Some(Value::from(42.0).unwrap()),
+            None
+        ).unwrap();
+        ts.i("return".to_string()).unwrap();
+        ts.i("take".to_string()).unwrap();
+        let val = ts.pull().expect("No pull() happens");
+        assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
+    }
+
 }

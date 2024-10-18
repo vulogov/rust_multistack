@@ -66,6 +66,10 @@ pub fn stdlib_return_to_stack_inline(ts: &mut TS) -> Result<&mut TS, Error> {
     stdlib_return_to_stack(ts, name, None)
 }
 
+pub fn stdlib_take_to_stack_inline(ts: &mut TS) -> Result<&mut TS, Error> {
+    stdlib_return_to_current(ts, None, None)
+}
+
 pub fn init_stdlib(ts: &mut TS) {
     let _ = ts.register_function("return".to_string(), stdlib_return_from_current);
     let _ = ts.register_inline("return".to_string(), stdlib_return_from_current_inline);
@@ -74,4 +78,5 @@ pub fn init_stdlib(ts: &mut TS) {
     let _ = ts.register_function("from_workbench".to_string(), stdlib_return_to_current);
     let _ = ts.register_function("return_to".to_string(), stdlib_return_to_stack);
     let _ = ts.register_inline("return_to".to_string(), stdlib_return_to_stack_inline);
+    let _ = ts.register_inline("take".to_string(), stdlib_take_to_stack_inline);
 }
