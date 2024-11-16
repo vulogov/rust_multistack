@@ -29,6 +29,37 @@ pub fn stdlib_ensure_stack_inline(ts: &mut TS) -> Result<&mut TS, Error> {
     stdlib_ensure_stack(ts, name, None)
 }
 
+pub fn stdlib_set_stack_capacity_inline(ts: &mut TS) -> Result<&mut TS, Error> {
+    if ts.current_stack_len() < 2 {
+        bail!("Stack is too shallow for inline set_stack_capacity()");
+    }
+    let name_value = match ts.pull() {
+        Some(name) => name,
+        None => {
+            bail!("capacity returns NO DATA #1");
+        }
+    };
+    let cap_value = match ts.pull() {
+        Some(name) => name,
+        None => {
+            bail!("capacity returns NO DATA #2");
+        }
+    };
+    let name_str = match name_value.cast_string() {
+        Ok(name_str) => name_str,
+        Err(err) => {
+            bail!("capacity casting error #1: {}", err);
+        }
+    };
+    let cap_int = match cap_value.cast_int() {
+        Ok(cap_int) => cap_int,
+        Err(err) => {
+            bail!("capacity casting error #2: {}", err);
+        }
+    };
+    Ok(ts.ensure_stack_with_capacity(name_str, cap_int as usize))
+}
+
 pub fn stdlib_stack_exists_inline(ts: &mut TS) -> Result<&mut TS, Error> {
     if ts.current_stack_len() < 1 {
         bail!("Stack is too shallow for inline stack_exists()");
@@ -62,5 +93,6 @@ pub fn stdlib_stack_exists_inline(ts: &mut TS) -> Result<&mut TS, Error> {
 pub fn init_stdlib(ts: &mut TS) {
     let _ = ts.register_function("ensure_stack".to_string(), stdlib_ensure_stack);
     let _ = ts.register_inline("ensure_stack".to_string(), stdlib_ensure_stack_inline);
+    let _ = ts.register_inline("ensure_stack_with_capacity".to_string(), stdlib_set_stack_capacity_inline);
     let _ = ts.register_inline("stack_exists".to_string(), stdlib_stack_exists_inline);
 }

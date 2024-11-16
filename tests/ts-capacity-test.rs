@@ -35,4 +35,21 @@ mod tests {
         assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
     }
 
+    #[test]
+    fn test_inline_ensure_stack_with_capacity() {
+        let mut ts = TS::new();
+        ts.f("push".to_string(),
+            Some(Value::from(1).unwrap()),
+            None
+        ).unwrap();
+        ts.f("push".to_string(),
+            Some(Value::from("A").unwrap()),
+            None
+        ).unwrap();
+        ts.i("ensure_stack_with_capacity".to_string()).unwrap();
+        ts.push_to_stack("A".to_string(), Value::from(41.0).unwrap());
+        ts.push_to_stack("A".to_string(), Value::from(42.0).unwrap());
+        assert_eq!(ts.stack_len("A".to_string()), 1);
+    }
+
 }
