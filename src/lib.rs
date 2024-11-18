@@ -28,3 +28,7 @@ pub mod ts_drop_stack;
 pub mod ts_stack_op;
 pub mod ts_list;
 pub mod ts_workbench;
+
+pub fn version() -> String {
+    env!("CARGO_PKG_VERSION").to_string().clone()
+}
