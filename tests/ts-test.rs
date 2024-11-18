@@ -91,4 +91,8 @@ mod tests {
         let s_name = ts.current_stack_name().expect("No value been pulled");
         assert_eq!(s_name, "B");
     }
+    #[test]
+    fn test_ts_version() {
+        assert_eq!(rust_multistack::version(), env!("CARGO_PKG_VERSION").to_string());
+    }
 }
