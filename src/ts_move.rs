@@ -31,10 +31,10 @@ impl TS {
         self
     }
     pub fn move_to_current(&mut self, name_from: String) -> &mut TS {
-        let stack_name = match ts.current_stack_name() {
+        let stack_name = match self.current_stack_name() {
             Some(stack_name) => stack_name,
             None => {
-                return ts;
+                return self;
             }
         };
         loop {
