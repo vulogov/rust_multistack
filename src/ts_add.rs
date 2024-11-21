@@ -16,4 +16,13 @@ impl TS {
         }
         self
     }
+
+    pub fn add_named_fifo(&mut self, name: String) -> &mut TS {
+        if ! self.stack.contains_key(&name) {
+            let stack = Stack::fifo(name);
+            self.stacks.push_back(stack.stack_id());
+            self.stack.insert(stack.stack_id(), stack);
+        }
+        self
+    }
 }

@@ -24,6 +24,12 @@ impl<T> Stack<T> {
         res.id = id;
         res
     }
+    pub fn fifo(id: String) -> Self {
+        let mut res = Stack::new();
+        res.id = id;
+        res.policy = false;
+        res
+    }
     pub fn stack_id(&self) -> String {
         self.id.clone()
     }
