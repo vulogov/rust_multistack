@@ -8,6 +8,16 @@ pub fn ts_move_from_stack(ts: &mut TS, name_from: String, name_to: String) -> &m
     ts.move_from_stack(name_from, name_to)
 }
 
+pub fn ts_move_to_current_stack(ts: &mut TS, name_from: String) -> &mut TS {
+    let stack_name = match ts.current_stack_name() {
+        Some(stack_name) => stack_name,
+        None => {
+            return ts;
+        }
+    };
+    ts.move_from_stack(name_from, stack_name)
+}
+
 impl TS {
     pub fn move_from_current(&mut self, name_to: String) -> &mut TS {
         loop {

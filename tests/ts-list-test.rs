@@ -32,4 +32,28 @@ mod tests {
         assert_eq!(val.len(), 3);
     }
 
+    #[test]
+    fn test_fold_current_with_none() {
+        let mut ts = TS::new();
+        ts.push(Value::from(41.0).unwrap())
+          .push(Value::nodata())
+          .push(Value::from(42.0).unwrap())
+          .push(Value::from(43.0).unwrap());
+        ts.fold_current().unwrap();
+        let val = ts.pull().expect("No pull() happens");
+        assert_eq!(val.len(), 2);
+    }
+
+    #[test]
+    fn test_fold_all_current() {
+        let mut ts = TS::new();
+        ts.push(Value::from(41.0).unwrap())
+          .push(Value::from(42.0).unwrap())
+          .push(Value::nodata())
+          .push(Value::from(43.0).unwrap());
+        ts.fold_all_in_current().unwrap();
+        let val = ts.pull().expect("No pull() happens");
+        assert_eq!(val.len(), 4);
+    }
+
 }
