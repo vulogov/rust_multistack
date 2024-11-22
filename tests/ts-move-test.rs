@@ -32,6 +32,19 @@ mod tests {
     }
 
     #[test]
+    fn test_ts_move_from_current_with_none() {
+        let mut ts = TS::new();
+        ts.ensure_stack("A".to_string());
+        ts.ensure_stack("B".to_string());
+        ts.push(Value::from(41.0).unwrap());
+        ts.push(Value::nodata());
+        ts.push(Value::from(42.0).unwrap());
+        ts.move_from_current("A".to_string());
+        let val = ts.pull_from_stack("A".to_string()).expect("No pull() happens");
+        assert_eq!(val.cast_float().unwrap(), 42.0 as f64);
+    }
+
+    #[test]
     fn test_ts_move_from_current_function() {
         let mut ts = TS::new();
         ts.ensure_stack("A".to_string());
